@@ -45,26 +45,36 @@ public class FPLLeagueWinners {
     }
 
     private static void displayTopWinners(List<Manager> managers, int topCount, int gameweek) {
+        if (!managers.get(0).getGwPointsByGwNo().containsKey(gameweek)) {
+            System.out.println("!!Invalid gameweek no.!!");
+            return;
+        }
         managers.sort((o1, o2) -> Integer.compare(
                 o2.getGwPointsByGwNo().get(gameweek),
                 o1.getGwPointsByGwNo().get(gameweek)
         ));
         System.out.println();
         System.out.printf(
-                "%10s %50s %50s %20s",
+                "%10s %50s %50s %20s %60s",
                 "Id",
                 "Name",
                 "User name",
-                "Gameweek Points"
+                "Gameweek Points",
+                "Link"
         );
         System.out.println();
         managers.subList(0, Math.min(topCount, managers.size())).forEach(manager -> {
             System.out.printf(
-                    "%10d %50s %50s %20d",
+                    "%10d %50s %50s %20d %60s",
                     manager.getId(),
                     manager.getPlayerName(),
                     manager.getEntryName(),
-                    manager.getGwPointsByGwNo().get(gameweek)
+                    manager.getGwPointsByGwNo().get(gameweek),
+                    String.format(
+                            "https://fantasy.premierleague.com/entry/%d/event/%d",
+                            manager.getEntry(),
+                            gameweek
+                    )
             );
             System.out.println();
         });
