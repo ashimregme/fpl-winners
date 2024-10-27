@@ -45,14 +45,12 @@ public class FPLLeagueWinners {
     }
 
     private static void displayTopWinners(List<Manager> managers, int topCount, int gameweek) {
-        if (!managers.get(0).getGwPointsByGwNo().containsKey(gameweek)) {
-            System.out.println("!!Invalid gameweek no.!!");
-            return;
-        }
-        managers.sort((o1, o2) -> Integer.compare(
-                o2.getGwPointsByGwNo().get(gameweek),
-                o1.getGwPointsByGwNo().get(gameweek)
-        ));
+        List<Manager> filteredManagers = managers.stream()
+                .filter(manager -> manager.getGwPointsByGwNo().containsKey(gameweek))
+                .sorted((o1, o2) -> Integer.compare(
+                        o2.getGwPointsByGwNo().get(gameweek),
+                        o1.getGwPointsByGwNo().get(gameweek)
+                )).toList();
         System.out.println();
         System.out.printf(
                 "%10s %50s %50s %20s %60s",
@@ -63,7 +61,7 @@ public class FPLLeagueWinners {
                 "Link"
         );
         System.out.println();
-        managers.subList(0, Math.min(topCount, managers.size())).forEach(manager -> {
+        filteredManagers.subList(0, Math.min(topCount, filteredManagers.size())).forEach(manager -> {
             System.out.printf(
                     "%10d %50s %50s %20d %60s",
                     manager.getId(),
