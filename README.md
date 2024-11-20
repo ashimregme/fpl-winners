@@ -1,6 +1,6 @@
 # FPL Winners
 
-Command-line application to fetch top N winners of a Fantasy Premier League (FPL) 
+Command-line application to fetch top N winners of a Fantasy Premier League (FPL) for specific gameweeks
 using REST APIs provided by FPL.
 
 ## Usage Instruction
